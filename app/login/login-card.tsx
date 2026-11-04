@@ -1,5 +1,6 @@
 "use client";
 import { ArrowLeft, Mail } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Logo } from "@/components/shell/logo";
 import { Button } from "@/components/ui/button";
@@ -154,7 +155,14 @@ export function LoginCard({ error, next, deleted }: { error?: string; next?: str
             {message}
           </p>
         )}
-        {!sentTo && <p className="mt-6 text-xs leading-relaxed text-faint">No password needed. The first sign-in creates your account, and your history stays private and syncs across your devices.</p>}
+        {!sentTo && (
+          <p className="mt-6 text-xs leading-relaxed text-faint">
+            No password needed. The first sign-in creates your account, and your history stays private and syncs across your devices.{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-muted">
+              Privacy policy
+            </Link>
+          </p>
+        )}
       </div>
     </main>
   );
