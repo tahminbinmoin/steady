@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Every colour in the app comes from these variables, so a
+   theme is just a different set of values.
+   ------------------------------------------------------------------------ */
+:root {
+  --background: #f7f6f3;
+  --surface: #ffffff;
+  --surface-2: #f1efeb;
+  --border: #e6e3de;
+  --border-strong: #d6d2cb;
+  --text: #1b1a18;
+  --text-muted: #6e6a64;
+  --text-faint: #a29d95;
+  --accent: #2f7a57;
+  --accent-hover: #27684a;
+  --accent-fg: #ffffff;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --danger: #b4483c;
+  --danger-soft: color-mix(in oklab, var(--danger) 10%, transparent);
+  --heat-0: #ebe8e3;
+  --heat-1: color-mix(in oklab, var(--accent) 22%, var(--surface));
+  --heat-2: color-mix(in oklab, var(--accent) 45%, var(--surface));
+  --heat-3: color-mix(in oklab, var(--accent) 70%, var(--surface));
+  --heat-4: var(--accent);
+  --shadow-raised: 0 1px 2px rgb(27 26 24 / 0.04), 0 8px 24px -8px rgb(27 26 24 / 0.12);
+  --ring: color-mix(in oklab, var(--accent) 55%, transparent);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0f0f11;
+  --surface: #17171b;
+  --surface-2: #1e1e23;
+  --border: #2a2a30;
+  --border-strong: #3a3a42;
+  --text: #ececef;
+  --text-muted: #8e8e96;
+  --text-faint: #5e5e66;
+  --accent: #4fb386;
+  --accent-hover: #63c296;
+  --accent-fg: #0b130f;
+  --danger: #e0705f;
+  --heat-0: #222227;
+  --heat-1: color-mix(in oklab, var(--accent) 25%, var(--surface));
+  --heat-2: color-mix(in oklab, var(--accent) 48%, var(--surface));
+  --heat-3: color-mix(in oklab, var(--accent) 72%, var(--surface));
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-heat-0: var(--heat-0);
+  --color-heat-1: var(--heat-1);
+  --color-heat-2: var(--heat-2);
+  --color-heat-3: var(--heat-3);
+  --color-heat-4: var(--heat-4);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --shadow-raised: var(--shadow-raised);
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --animate-fade-in: fade-in 200ms ease-out;
+  --animate-pop: pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: var(--accent-soft);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Thin, quiet scrollbars for horizontally scrolling grids. */
+.scroll-quiet {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
