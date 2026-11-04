@@ -6,6 +6,7 @@ import { Logo } from "@/components/shell/logo";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import { GoogleSignInButton } from "./google-button";
 import { ThemeToggleStandalone } from "./theme-toggle-standalone";
 
 type Provider = "google" | "apple";
@@ -30,6 +31,7 @@ export function LoginCard({ error, next, deleted }: { error?: string; next?: str
   const [message, setMessage] = useState<string | null>(error ?? null);
   const [email, setEmail] = useState("");
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
 
   const signInWith = async (provider: Provider) => {
     setPending(provider);
@@ -108,11 +110,7 @@ export function LoginCard({ error, next, deleted }: { error?: string; next?: str
             </div>
 
             <div className="mt-8 grid gap-2.5">
-              {PROVIDERS.includes("google") && (
-                <Button size="lg" className="w-full" disabled={pending !== null} onClick={() => signInWith("google")}>
-                  {pending === "google" ? "Redirecting…" : "Continue with Google"}
-                </Button>
-              )}
+              {PROVIDERS.includes("google") && <GoogleSignInButton next={safeNext} onError={setMessage} disabled={pending !== null} />}
               {PROVIDERS.includes("apple") && (
                 <Button size="lg" className="w-full !border-transparent !bg-text !text-background hover:opacity-90" disabled={pending !== null} onClick={() => signInWith("apple")}>
                   {pending === "apple" ? "Redirecting…" : "Continue with Apple"}
